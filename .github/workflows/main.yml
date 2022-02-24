@@ -21,10 +21,6 @@ jobs:
         cache: maven
     - name: Maven packaging
       run: mvn -B clean package --file pom.xml
-    - name: Set target as work directory
-      run: |
-          cd target
-          ls
     - name: Log in to Docker Hub
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
       with:
@@ -32,6 +28,8 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build and push Docker image
       run: |
+          cd target
+          ls
           docker build -t node:v1 .
           docker tag node:v1 adrabkah/node:v1
           docker push  adrabkah/node:v1
