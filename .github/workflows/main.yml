@@ -23,7 +23,8 @@ jobs:
       run: mvn -B clean package --file pom.xml
     - name: Set target as work directory
       run: |
-          cd target 
+          cd target
+          ls
     - name: Build Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
