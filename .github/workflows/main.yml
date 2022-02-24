@@ -29,7 +29,6 @@ jobs:
     - name: Build and push Docker image
       run: |
           cd target
-          ls
           docker build -t node:v1 .
           docker tag node:v1 adrabkah/node:v1
           docker push  adrabkah/node:v1
