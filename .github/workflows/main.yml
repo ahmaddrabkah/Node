@@ -28,7 +28,7 @@ jobs:
     - name: Build Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-       image: node:v1
+       image: node
        registry: docker.io
        dockerfile: 'target/Dockerfile'
        username: ${{ secrets.DOCKER_USERNAME }}
