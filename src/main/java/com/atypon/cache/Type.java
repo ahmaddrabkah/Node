@@ -6,27 +6,29 @@ import org.json.simple.JSONObject;
 import java.util.*;
 
 public class Type {
-    private final HashMap<String, JSONObject> objects = new HashMap<>();
+    private final Map<String, JSONObject> objects = new HashMap<>();
     private final Deque<String> LRUObject = new LinkedList<>();
-    private final String schemaName;
-    private final String typeName;
-
-    public Type(String schemaName, String typeName) {
-        this.schemaName = schemaName;
-        this.typeName = typeName;
-    }
-    public HashMap<String, JSONObject> getObjects(){
-        return objects;
+    private final String SCHEMA_NAME;
+    private final String TYPE_NAME;
+    private final int MAX_SIZE;
+    public Type(String schemaName, String typeName, int maxSize) {
+        this.SCHEMA_NAME = schemaName;
+        this.TYPE_NAME = typeName;
+        this.MAX_SIZE = maxSize;
     }
     public JSONObject getObject(String id){
-        if(objects.containsKey(id)) {
-            moveObjectToFirst(id);
-            return objects.get(id);
-        }
-        JSONObject object = getObjectIfExist(id);
-        if(object != null){
-            addObject(id,object);
-            return object;
+        synchronized (objects) {
+            synchronized (LRUObject) {
+                if(objects.containsKey(id)) {
+                    moveObjectToFirst(id);
+                    return objects.get(id);
+                }
+                JSONObject object = getObjectIfExist(id);
+                if(object != null){
+                    addObject(id,object);
+                    return object;
+                }
+            }
         }
         return null;
     }
@@ -38,7 +40,7 @@ public class Type {
     }
     private JSONObject getObjectIfExist(String id){
         FileReader dataReader = FileReader.getInstance("/database");
-        HashMap<String, JSONObject> allObjects =  dataReader.getAllFilesDataInDirectory(schemaName+"/"+typeName);
+        Map<String, JSONObject> allObjects =  dataReader.getAllFilesDataInDirectory(SCHEMA_NAME +"/"+ TYPE_NAME);
         if(allObjects.containsKey(id)) {
             return allObjects.get(id);
         }
@@ -47,7 +49,7 @@ public class Type {
     public void addObject(String id, JSONObject object){
         synchronized (objects){
             synchronized (LRUObject){
-                if( !LRUObject.isEmpty()){
+                if( LRUObject.size() == MAX_SIZE){
                     String leastUsedObject = LRUObject.removeLast();
                     objects.remove(leastUsedObject);
                 }
@@ -56,5 +58,4 @@ public class Type {
             }
         }
     }
-
 }

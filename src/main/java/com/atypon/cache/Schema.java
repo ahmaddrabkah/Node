@@ -1,11 +1,12 @@
 package com.atypon.cache;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Schema implements Block{
-    private final HashMap<String, Type> schemaTypes;
+    private final Map<String, Type> schemaTypes;
 
-    public Schema(HashMap<String, Type> schemaData){
+    public Schema(Map<String, Type> schemaData){
         this.schemaTypes = schemaData;
     }
     @Override
