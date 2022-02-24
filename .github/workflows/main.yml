@@ -27,5 +27,5 @@ jobs:
           image : node:v1
           registry : docker.io
           dockerfile : Dockerfile
-          username : adrabkah
-          password : ADrabkah22@
+          username : ${{ secrets.DOCKER_USERNAME }}
+          password : ${{ secrets.DOCKER_PASSWORD }}
