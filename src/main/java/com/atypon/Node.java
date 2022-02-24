@@ -10,7 +10,7 @@ import java.util.concurrent.*;
 public class Node {
     private final Cache cache = LRUCache.getInstance();
     public static void main(String[] args){
-        System.out.println("Node start !!");
+        System.out.println("Node start **");
         new Node();
     }
     public Node(){
