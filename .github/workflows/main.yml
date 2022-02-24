@@ -18,7 +18,7 @@ jobs:
           distribution : 'adopt'
           cache : maven
       - name : Maven packaging
-        run: mvn clean package
+        run: mvn -B clean package --file pom.xml
       - name : Set target as work directory 
         run : cd target
       - name : Build Docker image
