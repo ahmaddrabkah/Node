@@ -32,11 +32,3 @@ jobs:
           docker build -t node:v1 .
           docker tag node:v1 adrabkah/node:v1
           docker push  adrabkah/node:v1
-#    - name: Build Docker ima#ge
-#      uses: mr-smithers-excellent/docker-build-push@v5
-#      with:
-#       image: node
-#       registry: docker.io
-#       dockerfile: 'target/Dockerfile'
-#       username: ${{ secrets.DOCKER_USERNAME }}
-#       password: ${{ secrets.DOCKER_PASSWORD }}
