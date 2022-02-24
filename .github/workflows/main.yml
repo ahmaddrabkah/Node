@@ -10,22 +10,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 8
-        uses: actions/setup-java@v2
-        with:
-          java-version : '8'
-          distribution : 'adopt'
-          cache : maven
-      - name : Maven packaging
-        run: mvn -B clean package --file pom.xml
-      - name : Set target as work directory 
-        run : cd target
-      - name : Build Docker image
-      - uses : mr-smithers-excellent/docker-build-push@v5
-        with:
-          image : node:v1
-          registry : docker.io
-          dockerfile : Dockerfile
-          username : ${{ secrets.DOCKER_USERNAME }}
-          password : ${{ secrets.DOCKER_PASSWORD }}
+    - uses: actions/checkout@v2
+    - name: Set up JDK 8
+      uses: actions/setup-java@v2
+      with:
+        java-version : '8'
+        distribution : 'adopt'
+        cache : maven
+    - name : Maven packaging
+      run: mvn -B clean package --file pom.xml
+    - name : Set target as work directory 
+      run : cd target
+    - name : Build Docker image
+    - uses : mr-smithers-excellent/docker-build-push@v5
+      with:
+        image : node:v1
+        registry : docker.io
+        dockerfile : Dockerfile
+        username : ${{ secrets.DOCKER_USERNAME }}
+        password : ${{ secrets.DOCKER_PASSWORD }}
