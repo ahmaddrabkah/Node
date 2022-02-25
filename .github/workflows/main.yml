@@ -1,16 +1,12 @@
 name: Node_CI
-
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 8
@@ -32,3 +28,4 @@ jobs:
           docker build -t node:v1 .
           docker tag node:v1 adrabkah/node:v1
           docker push  adrabkah/node:v1
+

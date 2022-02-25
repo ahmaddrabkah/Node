@@ -22,14 +22,14 @@ public class FileReader {
         }
         return dataReader;
     }
-    public File[] getAllSubDirectories(String directoryName){
+    public synchronized File[] getAllSubDirectories(String directoryName){
         String directoryPath = PATH;
         if(directoryName != null)
             directoryPath += "/"+directoryName;
         File file = new File(directoryPath);
         return file.listFiles();
     }
-    public HashMap<String, JSONObject> getAllFilesDataInDirectory(String directoryName){
+    public synchronized HashMap<String, JSONObject> getAllFilesDataInDirectory(String directoryName){
         String directoryPath = PATH+"/"+directoryName;
         File [] files = new File(directoryPath).listFiles();
         HashMap<String, JSONObject> map = new HashMap<>();
@@ -42,7 +42,7 @@ public class FileReader {
         }
         return map;
     }
-    public JSONObject readDataFromFile(String directoryName, String fileName){
+    public synchronized JSONObject readDataFromFile(String directoryName, String fileName){
         String filePath = PATH+"/"+directoryName+"/"+fileName;
         String data=null;
         JSONObject object = null;
@@ -56,7 +56,7 @@ public class FileReader {
         }
         return object;
     }
-    public boolean isFileExist(String directoryName,String fileName) {
+    public synchronized boolean isFileExist(String directoryName,String fileName) {
         File[] allFolders = dataReader.getAllSubDirectories(directoryName);
         List<String> allDirectories=Arrays.asList(allFolders)
                 .stream().map(File::getName)
